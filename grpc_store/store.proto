@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+
+service StoreService {
+  rpc ListCategories (Empty) returns (CategoryList) {}
+  rpc ListProducts (Empty) returns (ProductList) {}
+  rpc ListProductsByCategoryId (CategoryId) returns (ProductList) {}
+  rpc ListFavoritesByUserId (UserId) returns (FavoriteList) {}
+  rpc AddToFavorites (AddToFavoritesRequest) returns (AddToFavoritesReply) {}
+  rpc AddProduct (AddProductRequest) returns (AddProductReply) {}
+  rpc DeleteProductById (DeleteProductByIdRequest) returns (DeleteProductByIdReply) {}
+}
+
+message Empty {}
+
+message Error {
+	string code = 1;
+	string data = 2;
+}
+
+message Category {
+	int32 id = 1;
+	string name = 2;
+	int32 productscount = 3;
+	
+}
+
+message CategoryList {
+	repeated Category categories = 1;
+}
+
+message Product {
+	int32 id = 1;
+	string name = 2;
+	int32 categoryid = 3;
+}
+
+message ProductList {
+	repeated Product products = 1;
+}
+
+message CategoryId {
+	int32 id = 1;
+}
+
+message UserId {
+	int32 id = 1;
+}
+
+message Favorite {
+	int32 userid = 1;
+	int32 productid = 2;
+}
+
+message FavoriteList {
+	repeated Favorite favorites = 1;
+}
+
+message AddToFavoritesRequest {
+	int32 userId = 1;
+	int32 productId = 2;
+}
+
+message AddToFavoritesReply {
+	bool success = 1;
+	Error error = 2;
+}
+
+message AddProductRequest {
+	string name = 1;
+	int32 categoryId = 2;
+}
+
+message AddProductReply {
+	bool success = 1;
+	Error error = 2;
+}
+
+message DeleteProductByIdRequest {
+	int32 id = 1;
+}
+
+message DeleteProductByIdReply {
+	bool success = 1;
+	Error error = 2;
+}
