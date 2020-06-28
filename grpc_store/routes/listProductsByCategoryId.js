@@ -2,12 +2,19 @@ const {pool} = require('./../dbConfig.js')
 const grpc = require('grpc')
 
 module.exports = async function(call, callback){
+
 	try {
+
 		const {id} = call.request
-		const { rows } = await pool.query('SELECT * FROM products WHERE categoryid = $1',[id])
-		callback(null, { 'products': rows })
+		if(id) {
+			const { rows } = await pool.query('SELECT * FROM products WHERE categoryid = $1',[id])
+			callback(null, { 'products': rows })
+		} else {
+			callback(new Error("Argument is missing"));
+		}
+
 	} catch (err) {
-		callback(null, {success:false, error:{code:grpc.status.INTERNAL, data:'internal server error'}})
+		callback(new Error("Internal server error"));
 		console.error(err)
 	}
 }

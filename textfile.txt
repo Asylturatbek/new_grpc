@@ -38,8 +38,8 @@ create table favorites (
 userId int not null,
 productId int not null,
 primary key (userId, productId),
-foreign key (userId) references users(id) on update cascade,
-foreign key (productId) references products(id) on update cascade
+foreign key (userId) references users(id) on delete cascade,
+foreign key (productId) references products(id) on delete cascade
 );
 
 create table sessions (

@@ -5,6 +5,6 @@ client.listCategories({}, (err, categories) => {
 		console.log('received response from server for listing categories')
 		console.log(categories)
 	} else {
-		console.error(err)
+		onsole.error({code: err.code, metadata: err.metadata, details: err.details})
 	}
 })

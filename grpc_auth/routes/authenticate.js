@@ -4,11 +4,14 @@ var grpc = require('grpc');
 const { pool } = require('./../dbConfig')
 
 module.exports = async function(call, callback){
-	console.log('received request from client for authentication')
-	console.log(call.request)
+
 	const {username, password} = call.request
 
 	try {
+		if(!username || !password){
+			callback(null, {success:false, error:{code:grpc.status.INVALID_ARGUMENT, data:'argument is missing'}})
+		}
+
 		const { rows } = await pool.query('SELECT * FROM users WHERE username = $1',[username])
 		
 		if (rows.length>0) {

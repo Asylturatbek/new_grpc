@@ -1,15 +1,14 @@
 const grpc = require('grpc')
 
 const protoLoader = require('@grpc/proto-loader');
-var PROTO_PATH = __dirname + '/../store.proto';
-console.log(PROTO_PATH)
+var PROTO_PATH = __dirname + '/../auth.proto';
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {});
 const packageObject = grpc.loadPackageDefinition(packageDefinition)
 
-const StoreService = packageObject.StoreService
+const AuthService = packageObject.AuthService
 
-const client = new StoreService('localhost:40041',
+const client = new AuthService('localhost:50051',
 	grpc.credentials.createInsecure())
 
 

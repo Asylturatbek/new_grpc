@@ -10,8 +10,9 @@ module.exports = async function(call, callback){
 			FROM categories`
 		const { rows } = await pool.query(state)
 		callback(null, { 'categories': rows })
+		
 	} catch(err) {
-		callback(null, {success:false, error:{code:grpc.status.INTERNAL, data:'internal server error'}})
+		callback(new Error("Internal server error"));
 		console.error(err)
 	}
 }
