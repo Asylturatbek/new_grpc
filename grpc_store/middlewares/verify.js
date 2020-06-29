@@ -1,7 +1,8 @@
 const {pool} = require('./../dbConfig.js')
 
 module.exports = async function(call) {
-	const sessionKey = call.metadata.get("sessionkey")[0]
+	const sessionKey = call.metadata.get("sessionkey")[0];
+	
 	if(sessionKey){
 
 		result = await pool.query("DELETE FROM sessions WHERE createddate < NOW() - INTERVAL '10 minutes'")
