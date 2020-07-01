@@ -51,6 +51,16 @@ primary key (sessionid),
 constraint fk_userid foreign key (userid) references users (id)
 );
 
+create table configs (
+id serial,
+isGlobal boolean not null,
+userid int,
+configkey varchar(200),
+configvalue varchar(200),
+primary key (id),
+constraint fk_userid foreign key (userid) references users (id)
+)
+
 
 INSERT INTO categories (name)
 VALUES

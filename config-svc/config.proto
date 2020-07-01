@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+service ConfigService {
+	rpc ListConfigs (Empty) returns (ConfigsList) {} 
+	rpc AddConfig (AddConfigRequest) returns (Reply) {}
+	rpc UpdateConfig (UpdateConfigRequest) returns (Reply) {}
+	rpc Status (Empty) returns (stream StatusReply) {}
+}
+
+message Empty {}
+
+message Error {
+	string code = 1;
+	string data = 2;
+}
+
+message AddConfigRequest {
+	bool isGlobal = 1;
+	int32 userId = 2;
+	string configKey = 3;
+	string configValue = 4;
+}
+
+message Config {
+	int32 id = 1;
+	bool isGlobal = 2;
+	int32 userId = 3;
+	string configKey = 4;
+	string configValue = 5;
+}
+
+
+message ConfigsList {
+	repeated Config configs = 1;
+}
+
+message Reply {
+	bool success = 1;
+	Error error = 2;
+}
+
+message UpdateConfigRequest {
+	int32 id = 1;
+	string configValue = 2;	
+}
+
+message StatusReply {
+	string message = 1;
+}
